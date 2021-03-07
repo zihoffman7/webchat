@@ -1,0 +1,30 @@
+{% extends 'frame.html' %}
+
+{% block navlinks %}
+<li><a class="button bbutton" href="{{ url_for('main.logout' )}}">Log out</a></li>
+{% endblock %}
+
+{% block stuff %}
+<section style="margin-top: 3%;">
+  {% if flash %}
+  <p id="flash">{{ flash }}</p>
+  <hr />
+  {% endif %}
+  <a style="float: right;" class="button" href="{{ url_for('main.settings' )}}">Settings</a>
+  <h2><span id="greeting"></span> {{ name }}</h2>
+  <hr />
+  <h4>Join room</h4>
+  <hr />
+  <form method="POST">
+    <p><input type="text" autocomplete="off" name="joinRoom" required placeholder="Room code" maxlength="8"></p>
+    <p><input class="button" type="submit" value="Join"></p>
+  </form>
+  <h4>Create a Room</h4>
+  <hr />
+  <form method="POST">
+    <p><input type="text" name="cRoom" required placeholder="Enter room name" autocomplete="off" maxlength="32"></p>
+    <p><small>Join codes are generated randomly</small></p>
+    <p><input type="submit" class="button" value="Create" name="createRoom"></p>
+  </form>
+</section>
+{% endblock %}

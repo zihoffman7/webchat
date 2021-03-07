@@ -1,0 +1,37 @@
+{% extends 'frame.html' %}
+
+{% block navlinks %}
+<li><a class="button bbutton" href="{{ url_for('main.logout' )}}">Log out</a></li>
+<li><a class="button bbutton" href="{{ url_for('main.dashboard') }}">Home</a></li>
+{% endblock %}
+
+{% block stuff %}
+<section>
+  {% if flash %}
+  <p id="flash">{{ flash }}</p>
+  <hr />
+  {% endif %}
+  <h4>Room Members</h4>
+  <hr />
+  {% if people|length > 0 %}
+  {% for i in people %}
+  <p style="margin: 2px; line-height: 28px;"><span class="name" style="background-color: {{ i[1] }};">{{ i[0] }}</span></p>
+  {% endfor %}
+  {% else %}
+  <p>Nobody is here. That's odd!</p>
+  {% endif %}
+  <h4>Change color</h4>
+  <hr />
+  <form method="POST" id="colorPicker">
+    {% for i in colors %}
+    <label><input name="color" required type="radio" value="{{ i }}"></label>
+    {% endfor %}
+    <p style="margin: 10px auto;"><input type="submit" value="Change" class="button"></p>
+    <script>
+    showColorPicker();
+    </script>
+  </form>
+  <hr />
+  <p><a class="button" href="{{ url_for('main.chat', chatcode=code) }}">Back</a></p>
+</section>
+{% endblock %}

@@ -1,0 +1,38 @@
+{% extends 'frame.html' %}
+
+{% block navlinks %}
+<li><a class="button bbutton" href="{{ url_for('main.logout') }}">Log out</a></li>
+<li><a class="button bbutton" href="{{ url_for('main.dashboard') }}">Home</a></li>
+{% endblock %}
+
+{% block stuff %}
+<section>
+  {% if flash %}
+  <p id="flash">{{ flash }}</p>
+  <hr />
+  {% endif %}
+  <h2>Room Settings for {{ room }} ({{ code }})</h2>
+  <h4>Remove Users</h4>
+  <hr />
+  {% if people %}
+  <form method="POST" id="removeUsers">
+    {% for i in people %}
+    <input type="checkbox" name="user" value="{{ i[0] }}">
+    <label><span class="name" style="background-color: {{ i[1] }};">{{ i[0] }}</span></label><br />
+    {% endfor%}
+    <p><input type="submit" class="button" name="removeUser" value="Remove users"></p>
+  </form>
+  {% else %}
+  <p>There is nobody else in this room</p>
+  <p><button class="button" onclick="copy('{{ code }}')">Copy join code</button></p>
+  {% endif %}
+  <h4>Delete Room</h4>
+  <hr />
+  <form method="POST">
+    <p>This action is irreversable</p>
+    <p><input type="submit" class="button rbutton" name="deleteRoom" id="delete" value="Delete room"></p>
+  </form>
+  <hr />
+  <p><a class="button bbutton" href="{{ url_for('main.chat', chatcode=code) }}">Back</a></p>
+</section>
+{% endblock %}

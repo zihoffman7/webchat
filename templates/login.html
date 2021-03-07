@@ -1,0 +1,23 @@
+{% extends 'frame.html' %}
+
+{% block navlinks %}
+<li><a class="button bbutton" href="{{ url_for('main.register') }}">Register</a></li>
+{% endblock %}
+
+{% block stuff %}
+<section style="margin-top: 5%;">
+  {% if flash %}
+  <p id="flash">{{ flash }}</p>
+  <hr />
+  {% endif %}
+  <h2>Welcome!</h2>
+  <h4>Log in</h4>
+  <hr />
+  <form method="POST">
+    <p><input required type="text" name="username" placeholder="Username or email" autocomplete="off"></p>
+    <p><input required type="password" name="password" placeholder="Password"></p>
+    <p>Don't have an account? <a href="{{ url_for('main.register') }}">Register</a></p>
+    <p><input class="button" type="submit" value="Log in"></p>
+  </form>
+</section>
+{% endblock %}

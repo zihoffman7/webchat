@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title></title>
+    <link rel="stylesheet" id="theme">
+    <link rel="stylesheet" href="{{ url_for('static', filename='main.css')}}">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="{{ url_for('static', filename='page.js') }}"></script>
+    <script>
+      var darkUrl = "{{ url_for('static', filename='dark.css') }}";
+      var lightUrl = "{{ url_for('static', filename='light.css') }}";
+    </script>
+    {% block headlinks %}{% endblock %}
+  </head>
+  <body>
+    {% block content %}{% endblock %}
+  </body>
+  <footer>
+    <p>&copy; 2021 Zachary Hoffman
+      <label class="switch">
+        <input type="checkbox">
+        <span class="slider round"></span>
+      </label>
+    </p>
+  </footer>
+  <script>
+    if (theme == "dark") {
+      $(".switch input").prop("checked", true);
+    }
+  </script>
+</html>

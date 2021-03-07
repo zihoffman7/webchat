@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+
+{% block headlinks %}
+{% block scripts %}{% endblock %}
+{% endblock %}
+
+{% block content %}
+<nav>
+  <ul id="headlinks">
+    {% block navlinks %}{% endblock %}
+    {% if name %}
+    <span style="float: right;">Hi {{ name }}&nbsp;&nbsp;</span>
+    {% endif %}
+  </ul>
+  <ul id="header">
+    <li>Chat</li>
+  </ul>
+</nav>
+<div id="content">
+  {% if name %}
+  <div id="sidebar">
+    <br />
+    {% if rooms %}
+    {% for i in rooms %}
+    <a href="{{ url_for('main.chat', chatcode=i[1]) }}"><p class="room">{{ i[0] }}</p></a>
+    <hr />
+    {% endfor %}
+    {% else %}
+    <p>You have no rooms!</p>
+    <hr />
+    <p>Any rooms you join will appear here.</p>
+    {% endif %}
+  </div>
+  {% endif %}
+  <div id="mainarea">
+    {% block stuff %}{% endblock %}
+  </div>
+</div>
+{% endblock %}

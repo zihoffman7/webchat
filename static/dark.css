@@ -1,0 +1,19 @@
+:root {
+  --pagebg: #292a2b;
+  --mainbg: #2d394a;
+  --sidebarbg: #4b5c6b;
+  --fontcolor: #f2f4f5;
+  --everyotherp: #3e454a;
+  --link: #669fff;
+  --header: #a2c9eb;
+}
+input[type="text"], input[type="password"] {
+  background-color: #3b3b3b;
+  border: 1px solid gray;
+  border-radius: 3px;
+  padding: 2px;
+  color: white;
+}
+#uploadImage img {
+  filter: invert();
+}

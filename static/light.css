@@ -1,0 +1,15 @@
+:root {
+  --pagebg: #accde8;
+  --mainbg: white;
+  --sidebarbg: #d5ddde;
+  --sidebarurl: darkslategray;
+  --fontcolor: black;
+  --everyotherp: #f2f2f2;
+  --link: blue;
+  --header: steelblue;
+}
+input[type="text"], input[type="password"] {
+  border: 1px solid gray;
+  border-radius: 3px;
+  padding: 2px;
+}

@@ -1,0 +1,51 @@
+{% extends 'frame.html' %}
+
+{% block scripts %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/3.1.0/socket.io.js"></script>
+<script>
+  window.MathJax = {
+    loader: {load: ["ui/safe"]},
+  };
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_CHTML"></script>
+<script src="{{ url_for('static', filename='client.js') }}"></script>
+{% endblock %}
+
+{% block navlinks %}
+<li><a class="button bbutton" href="{{ url_for('main.logout' )}}">Log out</a></li>
+<li><a class="button bbutton" href="{{ url_for('main.dashboard') }}">Home</a></li>
+{% endblock %}
+
+{% block stuff %}
+<section id="chatArea">
+  <h4 style="margin-top: 15px; margin-bottom: 10px;">{{ room }}</h4>
+  <hr />
+  <p>
+    <button class="button sbutton" onclick="copy('{{ code }}')">Copy join code</button>
+    {% if status %}
+    <a class="button sbutton" href="/chat/{{ code }}/settings">Room settings</a>
+    {% else %}
+    <a class="button sbutton" href="/chat/{{ code }}/leave">Permanently leave room</a>
+    {% endif %}
+    <a class="button sbutton" href="/chat/{{ code }}/members">Members</a>
+  </p>
+  <div id="chatFrame"></div>
+  <form id="sendArea">
+    <div hidden id="peoples">{{ people|tojson }}</div>
+    <input type="text" id="message" list="peoplementions" name="message" placeholder="Message" autocomplete="off" maxlength="500">
+    <input type="submit" value="Send" class="button">
+  </form>
+  <form id="imageUpload" method="post" enctype="multipart/form-data">
+    <input type="file" hidden name="fileToUpload" id="fileToUpload">
+    <abbr title="Upload Image">
+      <button type="submit" id="uploadImage">
+        <img src="{{ url_for('static', filename='imageIcon.png')}}" width="25" height="25">
+      </button>
+    </abbr>
+  </form>
+</section>
+<script>
+  $("#mainarea").css("height", "85vh");
+  $("#sidebar").css("height", "85vh");
+</script>
+{% endblock %}

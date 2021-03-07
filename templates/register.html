@@ -1,0 +1,24 @@
+{% extends 'frame.html' %}
+
+{% block navlinks %}
+<li><a class="button bbutton" href="{{ url_for('main.login') }}">Log in</a></li>
+{% endblock %}
+
+{% block stuff %}
+<section style="margin-top:5%;">
+  <h2>Welcome!</h2>
+  {% if flash %}
+  <p id="flash">{{ flash }}</p>
+  {% endif %}
+  <h4>Register</h4>
+  <hr />
+  <form method="POST" id="passwordSet">
+    <p><input required type="text" id="username" name="username" placeholder="Username" maxlength="22" autocomplete="off"></p>
+    <p><input required type="text" name="email" placeholder="Email" autocomplete="off" maxlength="256"></p>
+    <p><input required type="password" id="password" name="password" placeholder="Password"></p>
+    <p><input required type="password" id="password2" name="password2" onchange="checkPass('password', 'password2')" placeholder="Confirm password"></p>
+    <p>Already have an account? <a href="{{ url_for('main.login') }}">Log in</a></p>
+    <p><input class="button" type="submit" value="Register"></p>
+  </form>
+ </section>
+{% endblock %}

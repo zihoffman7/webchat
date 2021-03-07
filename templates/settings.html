@@ -1,0 +1,44 @@
+{% extends 'frame.html' %}
+
+{% block navlinks %}
+<li><a class="button bbutton" href="{{ url_for('main.logout' )}}">Log out</a></li>
+<li><a class="button bbutton" href="{{ url_for('main.dashboard' )}}">Home</a></li>
+{% endblock %}
+
+{% block stuff %}
+<section style="margin-top: 3%;">
+  {% if flash %}
+  <p id="flash">{{ flash }}</p>
+  <hr />
+  {% endif %}
+  <h2>Account Settings</h2>
+  <hr />
+  <h4>Change Password</h4>
+  <hr />
+  <form method="POST">
+    <p><input type="password" required name="password" id="password" placeholder="Enter a new password"></p>
+    <p><input type="password" required name="password2" id="password2" onchange="checkPass('password', 'password2')" placeholder="Confirm password"></p>
+    <p><input type="submit" class="button" value="Change" name="changePassword"</p>
+  </form>
+  <h4>Change Email</h4>
+  <hr />
+  <form method="POST">
+    <p><input type="text" name="email" placeholder="Enter a new email" autocomplete="off" maxlength="256" required></p>
+    <p><input type="submit" class="button" value="Change" name="changeEmail"></p>
+  </form>
+  <h4>Delete Account</h4>
+  <hr />
+  <form method="POST">
+    <p>This is a permanent action</p>
+    <p><input type="submit" class="button rbutton" name="deleteAccount" id="delete" value="Delete account"></p>
+  </form>
+  <hr />
+  <p><a class="button bbutton" href="{{ url_for('main.dashboard') }}">Back</a></p>
+</section>
+{% if name %}
+<script>
+  $("#mainarea").css("height", "105vh");
+  $("#sidebar").css("height", "105vh");
+</script>
+{% endif %}
+{% endblock %}
