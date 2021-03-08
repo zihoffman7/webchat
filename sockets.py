@@ -24,10 +24,10 @@ socketio = SocketIO()
 def connect():
     join_room(session["room"])
     # Join room associated with session id for private messages
-    join_room(session["id"])
+    join_room(session["id"] + session["room"])
     # Get the last 75 messages addressed to the user
     data = db.get_messages(session["room"], session["id"])
-    socketio.emit("clear", room=session["id"])
+    socketio.emit("clear", room=session["id"] + session["room"])
     messages = []
     for i in data[-100:]:
         if i[3] == "all":
@@ -35,7 +35,7 @@ def connect():
         else:
             messages.append([i[0], i[1], i[2], db.get_color(session["room"], i[4]), "private"])
     # Send the messages to client
-    socketio.emit("mass message", messages, room=session["id"])
+    socketio.emit("mass message", messages, room=session["id"] + session["room"])
 
 @socketio.on("disconnect")
 def disconnect():
@@ -53,7 +53,7 @@ def message(data):
         # Get the usernames of all recipients specified
         sendee = [i for i in list(data.split(" ")) if not i == ""]
         # Send message to sender
-        socketio.emit("message", [session["user"], now(), data, db.get_color(session["room"], session["id"]), "private"], broadcast=True, room=session["id"])
+        socketio.emit("message", [session["user"], now(), data, db.get_color(session["room"], session["id"]), "private"], broadcast=True, room=session["id"] + session["room"])
         db.log_message(session["room"], session["user"], now(), data, session["id"], session["id"])
         sent_to = []
         # Iterate through recipients and attempt to send message to them
@@ -66,11 +66,11 @@ def message(data):
                         sent_to.append(i[1:])
                         # If user exists, send private message and log it
                         if db.get_id(i[1:], session["room"]):
-                            socketio.emit("message", [session["user"], now(), data, db.get_color(session["room"], session["id"]), "private"], broadcast=True, room=db.get_id(i[1:], session["room"])[0])
+                            socketio.emit("message", [session["user"], now(), data, db.get_color(session["room"], session["id"]), "private"], broadcast=True, room=db.get_id(i[1:], session["room"])[0] + session["room"])
                             db.log_message(session["room"], session["user"], now(), data, session["id"], db.get_id(i[1:], session["room"])[0])
                         # If selected recipient doesn't exist, notify sender
                         else:
-                            socketio.emit("message", ["server", now(), "User " + i[1:] + " doesn't exist", "server", "private"], broadcast=True, room=session["id"])
+                            socketio.emit("message", ["server", now(), "User " + i[1:] + " doesn't exist", "server", "private"], broadcast=True, room=session["id"] + session["room"])
     # If message isn't a private message, send it normally
     else:
         db.log_message(session["room"], session["user"], now(), data, session["id"])
