@@ -231,3 +231,7 @@ def check_rows(table):
 def change_color(code, id, color):
     cursor.execute("UPDATE " + code + "_users SET color = '" + color + "' WHERE id = '" + id + "';")
     db.commit()
+
+def delete_if_deleted(room, id):
+    cursor.execute("DELETE FROM " + room + "_users WHERE user='" + id + "';")
+    db.commit()

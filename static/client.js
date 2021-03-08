@@ -48,8 +48,16 @@ $(document).ready(function() {
     if (data.length == 5) {
       data[1] = "<span class='notification'>private</span>" + data[1]
     }
-    // Append message
-    $("#chatFrame").append("<div><p><span class='name' style='background-color: " + data[3] + "'>" + data[0] + "</span>" + data[1] + "</p><p class='cont'>" + data[2].format() + "</p></div>");
+    // Layer message if...
+    // The previous message was sent by the same user
+    // The previous message wasn't privte
+    // The message is sent on the same day
+    if ($("#chatFrame div:last-child .name").html() == data[0] && data.length != 5 && !$("#chatFrame div:last-child .notification").length && $("#chatFrame div:last-child .time").text().substring(0, $("#chatFrame div:last-child .time").text().length - 8) == data[1].substring(0, data[1].length-8)) {
+      $("#chatFrame div:last-child .cont").html($("#chatFrame div:last-child .cont").html() + "<br />" + data[2].format());
+    }
+    else {
+      $("#chatFrame").append("<div><p><span class='name' style='background-color: " + data[3] + "'>" + data[0] + "</span><span class='time'>" + data[1] + "</span></p><p class='cont'>" + data[2].format() + "</p></div>");
+    }
     // Check for math
     MathJax.Hub.Queue(["Typeset", MathJax.Hub, "p"]);
     // Scroll to bottom of chat frame
@@ -64,7 +72,16 @@ $(document).ready(function() {
       if (item.length == 5) {
         item[1] = "<span class='notification'>private</span>" + item[1]
       }
-      $("#chatFrame").append("<div><p><span class='name' style='background-color: " + item[3] + "'>" + item[0] + "</span>" + item[1] + "</p><p class='cont'>" + item[2].format() + "</p></div>");
+      // Layer message if...
+      // The previous message was sent by the same user
+      // The previous message wasn't privte
+      // The message is sent on the same day
+      if ($("#chatFrame div:last-child .name").html() == item[0] && item.length != 5 && !$("#chatFrame div:last-child .notification").length && $("#chatFrame div:last-child .time").text().substring(0, $("#chatFrame div:last-child .time").text().length - 8) == item[1].substring(0, item[1].length-8)) {
+        $("#chatFrame div:last-child .cont").html($("#chatFrame div:last-child .cont").html() + "<br />" + item[2].format());
+      }
+      else {
+        $("#chatFrame").append("<div><p><span class='name' style='background-color: " + item[3] + "'>" + item[0] + "</span><span class='time'>" + item[1] + "</span></p><p class='cont'>" + item[2].format() + "</p></div>");
+      }
     });
     // Check for math
     try {
@@ -144,4 +161,17 @@ $(document).ready(function() {
       reconnect();
     }
   });
+});
+
+// Append text to send area
+$(document).on("click", ".name", function() {
+  if ($("#message").val()[$("#message").val().length - 1] == " " || $("#sendArea").val()[$("#sendArea").val().length-1] == null) {
+    $("#message").val($("#message").val() + "@" + event.target.innerHTML + " ");
+  }
+  // Add a space before @ mention if there isn't a space already
+  else {
+    $("#message").val($("#message").val() + " @" + event.target.innerHTML + " ");
+  }
+  // Hide file upload button if message area has text
+  $("#message").val().length > 0 ? $("#uploadImage").css("opacity", 0) : $("#uploadImage").css("opacity", 0.65);
 });

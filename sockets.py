@@ -70,6 +70,7 @@ def message(data):
                             db.log_message(session["room"], session["user"], now(), data, session["id"], db.get_id(i[1:], session["room"])[0])
                         # If selected recipient doesn't exist, notify sender
                         else:
+                            db.delete_if_deleted(session["room"], i[1:])
                             socketio.emit("message", ["server", now(), "User " + i[1:] + " doesn't exist", "server", "private"], broadcast=True, room=session["id"] + session["room"])
     # If message isn't a private message, send it normally
     else:
