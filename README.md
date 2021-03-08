@@ -18,3 +18,8 @@ Some features
   <li>Private messaging</li>
   <li>Light and dark themes</li>
 </ul>
+
+<img src="./readme_images/chat2.png">
+
+<img src="./readme_images/chat1.png">
+
