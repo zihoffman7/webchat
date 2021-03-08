@@ -23,3 +23,4 @@ Some features
 
 <img src="./readme_images/chat1.png" width="500">
 
+<img src="./readme_images/chat3.png" width="500">
