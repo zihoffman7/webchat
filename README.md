@@ -19,7 +19,7 @@ Some features
   <li>Light and dark themes</li>
 </ul>
 
-<img src="./readme_images/chat2.png">
+<img src="./readme_images/chat2.png" width="500">
 
-<img src="./readme_images/chat1.png">
+<img src="./readme_images/chat1.png" width="500">
 
