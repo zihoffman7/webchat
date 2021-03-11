@@ -175,7 +175,7 @@ def chat_settings(chatcode):
                     users = request.form.getlist("user")
                     # If no users are specified, notify client
                     if len(users) == 0:
-                        return render_template("roomsettings.html", name=session["user"], flash=Markup("Select a user to remove"), people=db.get_users(chatcode, session["id"]), code=chatcode, room=db.get_room_name(chatcode), rooms=db.get_rooms(session["id"]))
+                        return render_template("roomsettings.html", name=session["user"], flash=Markup("Please select a user to remove"), people=db.get_users(chatcode, session["id"]), code=chatcode, room=db.get_room_name(chatcode), rooms=db.get_rooms(session["id"]))
                     # Remove each user selected by client
                     for user in users:
                         db.remove_user(user, chatcode)
@@ -218,7 +218,7 @@ def chat_members(chatcode):
         return redirect(url_for("main.login"))
 
 @main.route("/chat/uploads/users/<user>/<filename>")
-def show_image(user, filename):
+def send_file(user, filename):
     return send_from_directory("uploads/users/" + user, filename)
 
 def upload(data):

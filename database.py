@@ -133,7 +133,10 @@ def delete_room(code):
 # Delete user from a room
 def leave_room(id, code):
     cursor.execute("DELETE FROM user_rooms WHERE userID = '" + id + "' AND roomID = '" + code + "';")
-    cursor.execute("DELETE FROM " + code + "_users WHERE id = '" + id + "';")
+    try:
+        cursor.execute("DELETE FROM " + code + "_users WHERE id = '" + id + "';")
+    except:
+        pass
     db.commit()
 
 # Retrive the name and code of all rooms a user id is part of
