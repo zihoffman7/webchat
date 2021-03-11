@@ -17,8 +17,8 @@
   {% if people %}
   <form method="POST" id="removeUsers">
     {% for i in people %}
-    <input type="checkbox" name="user" value="{{ i[0] }}">
-    <label><span class="name" style="background-color: {{ i[1] }};">{{ i[0] }}</span></label><br />
+    <input type="checkbox" name="user" value="{{ i[0] }}" id="check_{{ i[0] }}">
+    <label for="check_{{ i[0] }}"><span class="name" style="background-color: {{ i[1] }};">{{ i[0] }}</span></label><br />
     {% endfor%}
     <p><input type="submit" class="button" name="removeUser" value="Remove users"></p>
   </form>
