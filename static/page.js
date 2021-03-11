@@ -67,19 +67,6 @@ function copy(val) {
   document.body.removeChild(temp);
 }
 
-// Append text to send area
-$(document).on("click", ".name", function() {
-  if ($("#message").val()[$("#message").val().length - 1] == " " || $("#sendArea").val()[$("#sendArea").val().length-1] == null) {
-    $("#message").val($("#message").val() + "@" + event.target.innerHTML + " ");
-  }
-  // Add a space before @ mention if there isn't a space already
-  else {
-    $("#message").val($("#message").val() + " @" + event.target.innerHTML + " ");
-  }
-  // Hide file upload button if message area has text
-  $("#message").val().length > 0 ? $("#uploadImage").css("opacity", 0) : $("#uploadImage").css("opacity", 0.65);
-});
-
 $(document).ready(function() {
   themeChange(theme);
   $("body").show();
@@ -181,7 +168,7 @@ function checkEmbeded(which) {
 // Use random greeting on home page depending on hour
 $("#greeting").ready(function() {
   // Default greetings
-  var greetings = ["Hello", "Hi", "Welcome"];
+  var greetings = ["Hello", "Hi", "Greetings"];
   // Get hour of day
   var now = new Date().getHours();
   // Add message depending on time
