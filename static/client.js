@@ -7,19 +7,33 @@ function reconnect() {
 
 // Allow certain text characters to format the message
 String.prototype.format = function() {
-  // Replace ~text~ for a code block
-  // Replace *text* for bold
-  return this.replace(/\~([^\~]+)\~/g, "<code>$1</code>").replace(/\*([^\*]+)\*/g, "<strong>$1</strong>");
+  return this
+    // ~text~ for a code block
+    .replace(/\~([^\~]+)\~/g, "<code>$1</code>")
+    // **text** for bold
+    .replace(/\*\*([^\*\*]+)\*\*/g, "<strong>$1</strong>")
+    // --text-- for strikethrough
+    .replace(/\-\-([^\-\-]+)\-\-/g, "<del>$1</del>")
+    // __text__ for undeline
+    .replace(/\_\_([^\_\_]+)\_\_/g, "<u>$1</u>")
+    // //text// for italics
+    .replace(/\/\/([^\/\/]+)\/\//g, "<em>$1</em>")
+    // %%text%% for rainbow
+    .replace(/\%\%([^\%\%]+)\%\%/g, "<span class='rainbow'>$1</span>")
+    // \n for new line
+    .replace("\\n", "<br />")
+    // \t for tab
+    .replace("\\t", "&nbsp;&nbsp;&nbsp;");
 }
 
-// Convert all urls to clickable urls
+// Convert all detected urls to clickable urls
 String.prototype.urlify = function() {
   return this.replace(/(https?:\/\/[^\s]+)/g, function(url) {
     return "<a href='" + url + "' target='_blank'>" + url + "</a>";
   });
 }
 
-// Replace all HTML except for bold, underline, and italics
+// Remove all HTML from a string
 String.prototype.stripTags = function() {
   return this.replace(/(<([^>]+)>)/gi, "");
 }
@@ -52,7 +66,7 @@ $(document).ready(function() {
     // The previous message was sent by the same user
     // The previous message wasn't privte
     // The message is sent on the same day
-    if ($("#chatFrame div:last-child .name").html() == data[0] && data.length != 5 && !$("#chatFrame div:last-child .notification").length && $("#chatFrame div:last-child .time").text().substring(0, $("#chatFrame div:last-child .time").text().length - 8) == data[1].substring(0, data[1].length-8)) {
+    if ($("#chatFrame div:last-child .name").html() == data[0] && data.length != 5 && !$("#chatFrame div:last-child .notification").length && $("#chatFrame div:last-child .time").text().substring(0, $("#chatFrame div:last-child .time").text().length - 6) == data[1].substring(0, data[1].length - 6)) {
       $("#chatFrame div:last-child .cont").html($("#chatFrame div:last-child .cont").html() + "<br />" + data[2].format());
     }
     else {
@@ -76,7 +90,7 @@ $(document).ready(function() {
       // The previous message was sent by the same user
       // The previous message wasn't privte
       // The message is sent on the same day
-      if ($("#chatFrame div:last-child .name").html() == item[0] && item.length != 5 && !$("#chatFrame div:last-child .notification").length && $("#chatFrame div:last-child .time").text().substring(0, $("#chatFrame div:last-child .time").text().length - 8) == item[1].substring(0, item[1].length-8)) {
+      if ($("#chatFrame div:last-child .name").html() == item[0] && item.length != 5 && !$("#chatFrame div:last-child .notification").length && $("#chatFrame div:last-child .time").text().substring(0, $("#chatFrame div:last-child .time").text().length - 6) == item[1].substring(0, item[1].length - 6)) {
         $("#chatFrame div:last-child .cont").html($("#chatFrame div:last-child .cont").html() + "<br />" + item[2].format());
       }
       else {
@@ -112,10 +126,12 @@ $(document).ready(function() {
           try {
             // Send message to server
             socket.emit("message", $("#message").val().stripTags().urlify());
+            $("#autoframe").remove();
           }
           catch(err) {
             reconnect();
             socket.emit("message", $("#message").val().stripTags().urlify());
+            $("#autoframe").remove();
           }
           $("#message").val("");
           $("#uploadImage").css("opacity", 0.65);

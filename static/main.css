@@ -68,6 +68,13 @@ footer {
   background-color: var(--pagebg);
   padding: 5px 20px;
 }
+footer a {
+  text-decoration: none;
+  color: var(--fontcolor);
+}
+footer a:hover {
+  text-decoration: underline;
+}
 footer p {
   margin: 10px 0;
   font-size: 13px;
@@ -237,6 +244,12 @@ form > p {
   font-size: 13px;
   position: relative;
   bottom: 1px;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 }
 .name:hover {
   filter: brightness(98%);
@@ -273,7 +286,7 @@ button[type="submit"] {
 }
 .chatimg {
   width: 80%;
-  max-width: 300px;
+  max-width: 250px;
 }
 audio {
   max-width: 300px;
@@ -293,6 +306,7 @@ embed {
 }
 .cont {
   margin: 5px 1px;
+  line-height: 20px;
 }
 #sendArea input[type="submit"] {
   background-color: #037bfc;
@@ -443,4 +457,27 @@ form a:hover {
     overflow: hidden;
     padding-bottom: 30px;
   }
+}
+@keyframes backgroundChange {
+  0%,100% {
+    background-position: 0 0;
+  }
+  50% {
+    background-position: 100% 0;
+  }
+}
+.rainbow {
+  background: red;
+  background: -webkit-linear-gradient(left, var(--gradient));
+  background: -o-linear-gradient(right, var(--gradient));
+  background: -moz-linear-gradient(right, var(--gradient));
+  background: linear-gradient(to right, var(--gradient));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: backgroundChange 8s linear infinite;
+  background-size: 400% 100%;
+}
+:root {
+  --gradient: red, orangeRed, orange, mediumSeaGreen, green, mediumTurquoise, steelblue, violet, mediumOrchid, mediumPurple;
 }
