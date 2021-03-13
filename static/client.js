@@ -8,7 +8,9 @@ function reconnect() {
 // Allow certain text characters to format the message
 String.prototype.format = function() {
   return this
+    // replace all \n with new lines
     .replace(/\\n/g, "<br />")
+    // replace all \t with tabs
     .replace(/\\t/g, "&nbsp;&nbsp;")
     // ~text~ for a code block
     .replace(/\~([^\~]+)\~/g, "<code>$1</code>")
@@ -58,12 +60,12 @@ $(document).ready(function() {
   socket.on("message", function(data) {
     // If message is private, show private icon
     if (data.length == 5) {
-      data[1] = "<span class='notification'>private</span>" + data[1]
+      data[1] = "<span class='notification'>private</span>" + data[1];
     }
     // Layer message if...
-    // The previous message was sent by the same user
-    // The previous message wasn't privte
-    // The message is sent on the same day
+    // The previous message is sent by the same user
+    // The previous message isn't privte
+    // The new message is sent in the same hour as the previous one
     if ($("#chatFrame div:last-child .name").html() == data[0] && data.length != 5 && !$("#chatFrame div:last-child .notification").length && $("#chatFrame div:last-child .time").text().substring(0, $("#chatFrame div:last-child .time").text().length - 6) == data[1].substring(0, data[1].length - 6)) {
       $("#chatFrame div:last-child .cont").html($("#chatFrame div:last-child .cont").html() + "<br />" + data[2].format());
     }
@@ -82,12 +84,12 @@ $(document).ready(function() {
     // Append each message specified
     data.forEach(function(item) {
       if (item.length == 5) {
-        item[1] = "<span class='notification'>private</span>" + item[1]
+        item[1] = "<span class='notification'>private</span>" + item[1];
       }
       // Layer message if...
-      // The previous message was sent by the same user
-      // The previous message wasn't privte
-      // The message is sent on the same day
+      // The previous message is sent by the same user
+      // The previous message isn't privte
+      // The new message is sent in the same hour as the previous one
       if ($("#chatFrame div:last-child .name").html() == item[0] && item.length != 5 && !$("#chatFrame div:last-child .notification").length && $("#chatFrame div:last-child .time").text().substring(0, $("#chatFrame div:last-child .time").text().length - 6) == item[1].substring(0, item[1].length - 6)) {
         $("#chatFrame div:last-child .cont").html($("#chatFrame div:last-child .cont").html() + "<br />" + item[2].format());
       }
