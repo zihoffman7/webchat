@@ -3,18 +3,20 @@ import mysql.connector, random
 
 # Connect to database
 db = mysql.connector.connect(
-  host="localhost",
-  user="root",
-  password="password",
-  database="testing",
-  auth_plugin="mysql_native_password"
+    host="localhost",
+    user="root",
+    password="password",
+    database="testing",
+    auth_plugin="mysql_native_password",
+    charset="utf8mb4"
 )
 
 cursor = db.cursor(buffered=True)
 
+# Load initial data
+# Note: If creating or overriding tables, uncomment the first few lines of schema.sql
 with open("schema.sql") as f:
     sql = f.read()
-# DELETE MULTI=True, run, then rerun
 cursor.execute(sql, multi=True)
 db.commit()
 
@@ -235,6 +237,7 @@ def change_color(code, id, color):
     cursor.execute("UPDATE " + code + "_users SET color = '" + color + "' WHERE id = '" + id + "';")
     db.commit()
 
+# Remove user from room if their account is deleted
 def delete_if_deleted(room, id):
-    cursor.execute("DELETE FROM " + room + "_users WHERE user='" + id + "';")
+    cursor.execute("DELETE FROM " + room + "_users WHERE user = '" + id + "';")
     db.commit()
