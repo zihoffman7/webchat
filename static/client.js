@@ -8,6 +8,8 @@ function reconnect() {
 // Allow certain text characters to format the message
 String.prototype.format = function() {
   return this
+    .replace(/\\n/g, "<br />")
+    .replace(/\\t/g, "&nbsp;&nbsp;")
     // ~text~ for a code block
     .replace(/\~([^\~]+)\~/g, "<code>$1</code>")
     // **text** for bold
@@ -17,13 +19,9 @@ String.prototype.format = function() {
     // __text__ for undeline
     .replace(/\_\_([^\_\_]+)\_\_/g, "<u>$1</u>")
     // //text// for italics
-    .replace(/\/\/([^\/\/]+)\/\//g, "<em>$1</em>")
+    .replace(/\+\+([^\+\+]+)\+\+/g, "<em>$1</em>")
     // %%text%% for rainbow
-    .replace(/\%\%([^\%\%]+)\%\%/g, "<span class='rainbow'>$1</span>")
-    // \n for new line
-    .replace("\\n", "<br />")
-    // \t for tab
-    .replace("\\t", "&nbsp;&nbsp;&nbsp;");
+    .replace(/\%\%([^\%\%]+)\%\%/g, "<span class='rainbow'>$1</span>");
 }
 
 // Convert all detected urls to clickable urls
