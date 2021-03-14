@@ -2,7 +2,7 @@ from flask_socketio import SocketIO, emit, join_room, leave_room
 from subprocess import call
 from main import session, upload
 import database as db
-import datetime, json
+import datetime, json, re
 
 # The file types that will preview on the page
 # Other file types will show a download link instead
@@ -48,10 +48,11 @@ def disconnect():
 
 @socketio.on("message")
 def message(data):
+    format = "\*\*|\_\_|\+\+|\%\%|\-\-"
     # If private message detected, do private message
-    if " @" in data or "@" == data[0]:
+    if " @" in re.sub(format, "", data) or "@" == re.sub(format, "", data)[0]:
         # Get the usernames of all recipients specified
-        sendee = [i for i in list(data.split(" ")) if not i == ""]
+        sendee = [i for i in list(re.sub(format, "", data).split(" ")) if not i == ""]
         # Send message to sender
         socketio.emit("message", [session["user"], now(), data, db.get_color(session["room"], session["id"]), "private"], broadcast=True, room=session["id"] + session["room"])
         db.log_message(session["room"], session["user"], now(), data, session["id"], session["id"])
