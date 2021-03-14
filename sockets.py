@@ -48,7 +48,7 @@ def disconnect():
 
 @socketio.on("message")
 def message(data):
-    format = "\*\*|\_\_|\+\+|\%\%|\-\-"
+    format = "\*\*|\_\_|\+\+|\%\%|\-\-|\,|\.|\?"
     # If private message detected, do private message
     if " @" in re.sub(format, "", data) or "@" == re.sub(format, "", data)[0]:
         # Get the usernames of all recipients specified
