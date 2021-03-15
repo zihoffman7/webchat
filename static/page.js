@@ -109,7 +109,6 @@ $("#members").ready(function() {
   $("#message").on("input", function() {
     // Remove autocomplete if already exists
     $("#autoframe").remove();
-    $("#mainarea").css("padding-bottom", "30px");
     // Get last index of message
     var message = $(this).val().split(" ")[$(this).val().split(" ").length - 1];
     if (message) {
@@ -126,7 +125,7 @@ $("#members").ready(function() {
       $("#sendArea").append(autoframe);
       // Position the frame
       autoframe.css("margin-left", "5%");
-      $("#mainarea").css("padding-bottom", "0");
+      autoframe.css("margin-bottom", "-30px");
     }
   });
 });
@@ -135,7 +134,6 @@ $("#members").ready(function() {
 $(document).on("click", ".nameelement", function(e) {
   $("#message").val($("#message").val().substring(0, $("#message").val().lastIndexOf("@")) + event.target.innerHTML.replace(/(<([^>]+)>)/gi, ""));
   $("#autoframe").remove();
-  $("#mainarea").css("padding-bottom", "30px");
 });
 
 // Ensure that all video and audio files are loaded
