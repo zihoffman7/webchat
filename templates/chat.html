@@ -31,7 +31,9 @@
   </p>
   <div id="chatFrame"></div>
   <form id="sendArea">
-    <div hidden id="peoples">{{ people|tojson }}</div>
+    <script id="members">
+      var members = {{ people|tojson }};
+    </script>
     <input type="text" id="message" list="peoplementions" name="message" placeholder="Message" autocomplete="off" maxlength="500">
     <input type="submit" value="Send" class="button">
   </form>
