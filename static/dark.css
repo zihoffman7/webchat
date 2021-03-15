@@ -1,11 +1,12 @@
 :root {
-  --pagebg: #292a2b;
-  --mainbg: #2d394a;
-  --sidebarbg: #4b5c6b;
+  --mainbg: #21262d;
+  --sidebarbg: #222b39;
   --fontcolor: #f2f4f5;
   --everyotherp: #3e454a;
   --link: #669fff;
   --header: #a2c9eb;
+  --h2color: #a2cdf2;
+  --footerbg: #2d3b4a;
 }
 input[type="text"], input[type="password"] {
   background-color: #3b3b3b;

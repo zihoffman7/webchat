@@ -104,25 +104,19 @@ $(document).ready(function() {
 });
 
 // Custom autocomplete for @ mentions in chat
-$("#peoplementions").ready(function() {
-  // Attempt to grab array of all @ mentions possible
-  try {
-    var items = JSON.parse($("#peoples").html());
-  }
-  catch(err) {
-    // Don't do anything if can't load any @ mentions
-  }
+$("#members").ready(function() {
   // Add event listener for the message send area
   $("#message").on("input", function() {
     // Remove autocomplete if already exists
     $("#autoframe").remove();
+    $("#mainarea").css("padding-bottom", "30px");
     // Get last index of message
     var message = $(this).val().split(" ")[$(this).val().split(" ").length - 1];
     if (message) {
       // Create frame
       var autoframe = $("<div id='autoframe'></div>");
       // Add item to frame if applicable
-      items.forEach(function(item) {
+      members.forEach(function(item) {
         if (item.slice(0, message.length) == message) {
           // Bold the area the user has already typed
           autoframe.append("<p class='nameelement'><strong>" + item.slice(0, message.length) + "</strong>" + item.slice(message.length, item.length) + "</p>");
@@ -132,6 +126,7 @@ $("#peoplementions").ready(function() {
       $("#sendArea").append(autoframe);
       // Position the frame
       autoframe.css("margin-left", "5%");
+      $("#mainarea").css("padding-bottom", "0");
     }
   });
 });
@@ -140,6 +135,7 @@ $("#peoplementions").ready(function() {
 $(document).on("click", ".nameelement", function(e) {
   $("#message").val($("#message").val().substring(0, $("#message").val().lastIndexOf("@")) + event.target.innerHTML.replace(/(<([^>]+)>)/gi, ""));
   $("#autoframe").remove();
+  $("#mainarea").css("padding-bottom", "30px");
 });
 
 // Ensure that all video and audio files are loaded

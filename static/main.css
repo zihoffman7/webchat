@@ -2,21 +2,27 @@ body {
   margin: 0;
   font-family: Arial, Helvetica;
   color: var(--fontcolor);
-  background-color: var(--pagebg);;
+  background-color: var(--footerbg);
 }
 nav {
   top: 0;
   position: sticky;
   position: -webkit-sticky;
   padding: 3vh 10px;
-  background-color: var(--pagebg);
+  background-color: #2d445e;
   z-index: 100;
+}
+nav {
+  color: white
+}
+footer a {
+  color: var(--fontcolor);
 }
 nav ul {
   margin: 0;
 }
 section h2 {
-  color: var(--sidebarurl);
+  color: var(--h2color);
   margin-top: 30px;
 }
 #header {
@@ -65,12 +71,11 @@ nav #headlinks li {
   margin: 0 2px;
 }
 footer {
-  background-color: var(--pagebg);
+  background-color: var(--footerbg);
   padding: 5px 20px;
 }
 footer a {
   text-decoration: none;
-  color: var(--fontcolor);
 }
 footer a:hover {
   text-decoration: underline;
