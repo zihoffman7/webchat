@@ -1,7 +1,7 @@
 # webchat
 Functional multi-room chat website.
 
-Uses Python for back end (Flask framework).  
+Uses Python (3.8.5) for back end (Flask framework).  
 
 Connects to a local MySQL database to manage data.
 
