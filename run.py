@@ -1,7 +1,7 @@
 from __init__ import create_app, socketio
 
 # Get app instance
-app = create_app(debug=True)
+app = create_app()
 
 # Run app through socketio
 if __name__ == "__main__":
