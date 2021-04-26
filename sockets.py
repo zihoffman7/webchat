@@ -50,7 +50,7 @@ def disconnect():
 def message(data):
     format = "\*\*|\_\_|\+\+|\%\%|\-\-|\,|\.|\?"
     # If private message detected, do private message
-    if " @" in re.sub(format, "", data) or "@" == re.sub(format, "", data)[0]:
+    if " @" in re.sub(format, " ", data) or "@" == re.sub(format, " ", data)[0]:
         # Get the usernames of all recipients specified
         sendee = [i for i in list(re.sub(format, "", data).split(" ")) if not i == ""]
         # Send message to sender
@@ -87,11 +87,11 @@ def file(data):
         db.log_message(session["room"], session["user"], now(), "<img src='" + file + "' alt='file deleted' class='chatimg'>", session["id"])
         socketio.emit("message", [session["user"], now(), "<img src='" + file + "' alt='file deleted' class='chatimg'>", db.get_color(session["room"], session["id"])], broadcast=True, room=session["room"])
     elif data[1].lower() in file_types["audio"]:
-        db.log_message(session["room"], session["user"], now(), data[2] + "<br /><br /><audio controls><source src=" + file + ">Your browser does not support the audio element</audio>", session["id"])
-        socketio.emit("message", [session["user"], now(), data[2] + "<br /><br /><audio controls><source src=" + file + ">Your browser does not support the audio element</audio>", db.get_color(session["room"], session["id"])], broadcast=True, room=session["room"])
+        db.log_message(session["room"], session["user"], now(), data[2] + "<br /><br /><span><audio controls><source src=" + file + ">Your browser does not support the audio element</audio></span>", session["id"])
+        socketio.emit("message", [session["user"], now(), data[2] + "<br /><br /><span><audio controls><source src=" + file + ">Your browser does not support the audio element</audio></span>", db.get_color(session["room"], session["id"])], broadcast=True, room=session["room"])
     elif data[1].lower() in file_types["video"]:
-        db.log_message(session["room"], session["user"], now(), data[2] + "<br /><br /><video controls><source src=" + file + ">Your browser does not support the video element</video>", session["id"])
-        socketio.emit("message", [session["user"], now(), data[2] + "<br /><br /><video controls><source src=" + file + ">Your browser does not support the video element</video><br />", db.get_color(session["room"], session["id"])], broadcast=True, room=session["room"])
+        db.log_message(session["room"], session["user"], now(), data[2] + "<br /><br /><span><video controls><source src=" + file + ">Your browser does not support the video element</video></span>", session["id"])
+        socketio.emit("message", [session["user"], now(), data[2] + "<br /><br /><span><video controls><source src=" + file + ">Your browser does not support the video element</video></span><br />", db.get_color(session["room"], session["id"])], broadcast=True, room=session["room"])
     elif data[1].lower() in file_types["other"]:
         db.log_message(session["room"], session["user"], now(), "<embed src='" + file + "'><br /><br /><a href='" + file + "' download='" + data[2] + "' alt='file deleted' class='download'><img src='/static/downloadIcon.png' height='12' id='downloadImg'>" + data[2] + "</a>", session["id"])
         socketio.emit("message", [session["user"], now(), "<embed src='" + file + "'><br /><br /><a href='" + file + "' download='" + data[2] + "' alt='file deleted' class='download'><img src='/static/downloadIcon.png' height='12' id='downloadImg'>" + data[2] + "</a>", db.get_color(session["room"], session["id"])], broadcast=True, room=session["room"])
