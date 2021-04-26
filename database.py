@@ -86,7 +86,7 @@ def delete_account(id):
 def create_room(room_name, code, owner, color):
     # Create room in main room table
     cursor.execute("SELECT * FROM rooms WHERE owner = '" + owner + "';")
-    print(len(cursor.fetchall()))
+    # Ensure that user doesn't already own their max of five rooms
     if len(cursor.fetchall()) >= 5:
         return False
     cursor.execute("INSERT INTO rooms VALUES (%s, %s, %s)", (room_name, code, owner))
