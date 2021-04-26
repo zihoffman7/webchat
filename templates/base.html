@@ -5,14 +5,17 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <title></title>
+    <script rel="preload" as="script">
+      var darkUrl = "{{ url_for('static', filename='dark.css') }}";
+      var lightUrl = "{{ url_for('static', filename='light.css') }}";
+    </script>
+    <link rel="preload" href="{{ url_for('static', filename='page.js') }}" as="script">
+    <link rel="preload" href="{{ url_for('static', filename='light.css') }}" as="style">
+    <link rel="preload" href="{{ url_for('static', filename='dark.css') }}" as="style">
     <link rel="stylesheet" id="theme">
     <link rel="stylesheet" href="{{ url_for('static', filename='main.css')}}">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="{{ url_for('static', filename='page.js') }}"></script>
-    <script>
-      var darkUrl = "{{ url_for('static', filename='dark.css') }}";
-      var lightUrl = "{{ url_for('static', filename='light.css') }}";
-    </script>
     {% block headlinks %}{% endblock %}
   </head>
   <body>
