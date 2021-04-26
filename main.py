@@ -100,8 +100,9 @@ def dashboard():
                 if (len(room_name.strip()) > 0):
                     # Create room and generate join code
                     join_code = "".join(random.choice(string.ascii_uppercase + string.digits) for i in range(8))
-                    db.create_room(room_name, join_code, session["id"], random.choice(colors))
-                    return render_template("dashboard.html", name=session["user"], flash=room_name + " created", rooms=db.get_rooms(session["id"]), word="for")
+                    if not db.create_room(room_name, join_code, session["id"], random.choice(colors)):
+                        return render_template("dashboard.html", name=session["user"], flash="You already own your max of five rooms", rooms=db.get_rooms(session["id"]))
+                    return render_template("dashboard.html", name=session["user"], flash=room_name + " created", rooms=db.get_rooms(session["id"]))
                 return render_template("dashboard.html", name=session["user"], flash="Invalid room name", rooms=db.get_rooms(session["id"]))
         else:
             return render_template("dashboard.html", name=session["user"], rooms=db.get_rooms(session["id"]))

@@ -85,6 +85,10 @@ def delete_account(id):
 # Creating a room
 def create_room(room_name, code, owner, color):
     # Create room in main room table
+    cursor.execute("SELECT * FROM rooms WHERE owner = '" + owner + "';")
+    print(len(cursor.fetchall()))
+    if len(cursor.fetchall()) >= 5:
+        return False
     cursor.execute("INSERT INTO rooms VALUES (%s, %s, %s)", (room_name, code, owner))
     # Join the room as owner
     cursor.execute("INSERT INTO user_rooms VALUES (%s, %s, %s, %s)", (get_name(owner), owner, code, room_name))
@@ -97,6 +101,7 @@ def create_room(room_name, code, owner, color):
     # Add starting messages
     cursor.execute("INSERT INTO " + code + "_log VALUES (%s, %s, %s, %s, %s)", ("server", " ", "This is the beginning of " + room_name, "all", " "))
     db.commit()
+    return True
 
 # Join a room if applicable
 def join_room(name, id, code, color):
