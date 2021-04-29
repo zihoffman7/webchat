@@ -66,7 +66,7 @@ $(document).ready(function() {
     // The previous message is sent by the same user
     // The previous message isn't privte
     // The new message is sent in the same hour as the previous one
-    if ($("#chatFrame div:last-child .name").html() == data[0] && data.length != 5 && !$("#chatFrame div:last-child .notification").length && $("#chatFrame div:last-child .time").text().substring(0, $("#chatFrame div:last-child .time").text().length - 6) == data[1].substring(0, data[1].length - 6)) {
+    if (!$("#chatFrame div:last-child .cont .MathJax_CHTML").length && $("#chatFrame div:last-child .name").html() == data[0] && data.length != 5 && !$("#chatFrame div:last-child .notification").length && $("#chatFrame div:last-child .time").text().substring(0, $("#chatFrame div:last-child .time").text().length - 6) == data[1].substring(0, data[1].length - 6)) {
       $("#chatFrame div:last-child .cont").html($("#chatFrame div:last-child .cont").html() + "<br />" + data[2].format());
     }
     else {
